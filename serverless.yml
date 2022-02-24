@@ -7,9 +7,16 @@ plugins:
 provider:
   name: aws
   runtime: nodejs14.x
+  versionFunctions: false
+  region: ${opt:region, 'sa-east-1'}
+  apiGateway:
+    shouldStartNameWithService: true
 
 functions:
-  api:
-    handler: handler.handler
+  graphql:
+    handler: src/graphql.handler
     events:
-      - httpApi: '*'
+      - http:
+          path: graphql
+          method: any
+          cors: true
